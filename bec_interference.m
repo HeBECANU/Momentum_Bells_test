@@ -78,13 +78,14 @@ frac_opts.bounds = [-0.03, 0.03; -0.03, 0.03];%spacecial bounds
 
 
 %%
-% opts.data_root = 'Y:\TDC_user\ProgramFiles\my_read_tdc_gui_v1.0.1\dld_output\';
- opts.data_root = 'Z:\EXPERIMENT-DATA\2020_Momentum_Bells\';
+opts.data_root = 'Y:\TDC_user\ProgramFiles\my_read_tdc_gui_v1.0.1\dld_output\';
+%  opts.data_root = 'Z:\EXPERIMENT-DATA\2020_Momentum_Bells\';
 log_folder = 'log_Phi.txt';
 data_folders = {
-%     ''
+    ''
+%     '20230315_bec_mz_440_mus'
 %     '20210524_bec_MZ_10'
-    'full_interferometer\mach-zender\becs\20210520_bec_MZ_4'
+%     'full_interferometer\mach-zender\becs\20210520_bec_MZ_4'
 %     '20210521_bec_MZ_7'
 %     '20210519_bec_MZ_2'
     };
@@ -211,3 +212,19 @@ ylabel('Tranfer Fraction')
 %                 legend('$k=+1$','$k=0$','$k=-1$')
 %                 legend('$k=-2$','$k=-1$','$k=0$')
 
+%%
+
+x = [200,300,340,380,400,420,440,500];
+y = [4.03,1.94,2.49,3.27,3.42,3.78,4.13,2.15];
+
+func = @(b,x) mod(b(1).*(x+b(2)).^2+b(3),2*pi);
+
+phi_fit = fitnlm(x,y,func,[4e-5,0,0])
+
+x_vec = linspace(0,600);
+y_vec = func([3.5*10^-5,-180,pi/2],x_vec);
+stfig('phi');
+clf
+scatter(x,y)
+hold on
+plot(x_vec,mod(y_vec,2*pi))

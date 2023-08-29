@@ -11,34 +11,35 @@ opts.data_root = 'Y:\TDC_user\ProgramFiles\my_read_tdc_gui_v1.0.1\dld_output\';
 % opts.data_root = 'C:\Users\kieran\Documents\LOCAL-DATA\';
 % opts.data_root = 'C:\Users\BEC Machine\Documents\DATA_BACKUP\';
 
-data_folder = '20230209_mag_trans_then_mj=0_k=0-1,_halo_new_plate';%'20230309_k=0,-1_halo_overnight';%'20230209_mag_trans_then_mj=0_k=0-1,_halo_new_plate';%'20230201_single_helo_new_plate';%'20221212_new_plates_halo_test_4';%'20221102_new_plates_halo_test';%'20221125_new_plates_halo_test_2';%'20221209_new_plates_halo_test_3';%'2023130_new_plates_halo_3_halos';%
+data_folder = '';%'20230317_RT_k=+1,0,-1_Vsh_0_75_Vq_0_7_200_mus_3';
+% '20230318_RT_k=+1,0,-1_Vsh_0_75_Vq_0_7_200_mus_amp_scan_3';%'20230315_RT_k=+1,0,-1_Vsh_0_75_Vq_0_7_12000_mus';%'20230310_k=0,-1_mj=0_Vsh_0_75_Vq_0_5_tweaked_up';%'20230209_mag_trans_then_mj=0_k=0-1,_halo_new_plate';%'20230309_k=0,-1_halo_overnight';%%'20230201_single_helo_new_plate';%'20221212_new_plates_halo_test_4';%'20221102_new_plates_halo_test';%'20221125_new_plates_halo_test_2';%'20221209_new_plates_halo_test_3';%'2023130_new_plates_halo_3_halos';%
 % data_folder = 'k=0,-1,-2_halos_data\weak trap\20201119_k=0,-1,-2_halos_data_test_3';%20201006_k=0,-1,-2_halos_data_3';%'
 
 opts.import.dir = fullfile(opts.data_root, data_folder);
-opts.import.force_reimport = false;
+opts.import.force_reimport = true;
 opts.import.force_cache_load = ~opts.import.force_reimport;
 
-% opts.import.shot_num = 395:411; %can select specific shots to import
+% opts.import.shot_num = 346:373;%44:72;%398:540; %can select specific shots to import
 
 %% Import parameters
 tmp_xlim=[-35e-3, 35e-3];     %tight XY lims to eliminate hot spot from destroying pulse widths
 tmp_ylim=[-35e-3, 35e-3];
 tlim=[0,4];
 
-opts.num_lim = 0.5e3;%0.5e3;% %minimum atom number 1.5e3
+opts.num_lim = 2.0e3;%0.5e3;% %minimum atom number 1.5e3
 opts.halo_N_lim = -1;%2;%10;%0;% %minimum allowed number in halo 10
 opts.halo_N_lim_upper = Inf; %120;%2;%10;%0;% %minimum allowed number in halo 10
 y_cut = 11e-3;
 
 z_limits = [-0.9,0.9];%[-0.3,0.3];%[-0.3,0.3];%[-0.4,0.4];%[-0.68,0.68];%[-0.15,0.15];%[-0.15,0.15];%[-0.36,0.36];%
-radius_lim = [0.055,0.075];%[0.01,0.09];%[0.058,0.07];%[0.06,0.07];%[0.05,0.07];%[0.,1.17].*0.065;%[0.79,1.17].*0.065;%[0.61,1.26];%[0.89,1.11];%[0.89,1.16];%[0.9,1.05];%
+radius_lim = [0.056,0.072];%[0.03,0.09];%[0.056,0.071];%[0.058,0.07];%[0.06,0.07];%[0.05,0.07];%[0.,1.17].*0.065;%[0.79,1.17].*0.065;%[0.61,1.26];%[0.89,1.11];%[0.89,1.16];%[0.9,1.05];%
 
-ang_lim = 30;%30;%35;%angular limit in degrees
+ang_lim = 50;%15;%27;%30;%30;%35;%angular limit in degrees
 
 plot_dist = true; %do you want to see all the detailed stuff about the halo distributions
 opts.corr_center_check = false; %do you want a sceond check
 
-bec_bounds = {[3.8598,3.871],[3.871,3.8844]};%{[3.849,3.857],[3.857,3.871],[3.871,3.883],[3.883,3.897]};%{[3.874,3.884],[3.884,3.893]};%
+bec_bounds = {[3.857,3.871],[3.871,3.884],};%{[3.884,3.896]};%{[3.845,3.857],[3.857,3.871],[3.871,3.8844]};%{[3.849,3.857],[3.857,3.871],[3.871,3.883],[3.883,3.897]};%
 t0_factor = 3.8772;
 
 do_bb = 1;%if you want to measure the back to back correlations
@@ -152,7 +153,7 @@ opts.cent.correction_opts.plots = 0;
 opts.cent.visual = 2; %from 0 to 2
 opts.cent.savefigs = 0;
 opts.cent.threshold = [150,9000,9000].*1e3;%130  %[130,6000,2000.*3].*1e3;  %[150,80,80].*1e3;  %set in inverse units (Hz for time 1/m for space)
-opts.cent.min_threshold = [0,20,20].*1e3;%[16,7,10].*1e3;
+opts.cent.min_threshold = [0,10,10].*1e3;%[16,7,10].*1e3;
 opts.cent.sigma = [6.7e-5,16e-5,16e-5];%[8e-5,25e-5,25e-5];
 opts.cent.method = {'margin','average','average'};
 % opts.cent.top.method = {'margin','margin','margin'};
@@ -209,7 +210,7 @@ opts.vel_conv.v_mask=radius_lim;%[0.31,1.56];%[0.89,1.11]; %[0.61,1.26];%bounds 
 opts.vel_conv.z_mask = z_limits;%[-0.36,0.36];%[-0.65,0.65];%[-0.55,0.55];%[-0.68,0.68]; %[-0.68,0.68]; %in units of radius (standard [-0.76,0.76])
 opts.vel_conv.ang_lim = ang_lim; %angular limits of the azimuthal angle
 opts.vel_conv.y_mask = [-1.9,1.9];%[-0.8,0.8]; %in units of radius
-opts.vel_conv.theta_mask = [1.2,1.25;1.2-pi,1.25-pi];
+opts.vel_conv.theta_mask = [];%[1.256637061435917e+00 1.884955592153876e+00;1.256637061435917e+00-pi 1.884955592153876e+00-pi];%[];%[1.17,1.28;1.17-pi,1.28-pi];%[];%[-0.51,0.51;-0.51+pi,0.51+pi];%
 
 opts.vel_conv.centering_correction = [0 0 0].*0.5e-3;
 opts.vel_conv.phi_correction = [0 0];
@@ -278,7 +279,7 @@ if plot_dist
         gaussfity = ylimit.*gaussmf(gaussfitx,[0.003 0.065]);
         plot(gaussfitx,gaussfity)
 
-        stfig('halo comparison');
+        stfig(['halo comparison ',num2str(ii)]);
         clf
         plot_mask = rand(size(v_zxy,1),1)<0.65;
         scatter3(v_zxy(plot_mask,2),v_zxy(plot_mask,3),v_zxy(plot_mask,1),'.')
@@ -291,7 +292,7 @@ if plot_dist
         clf
         rad_shift=0.059;
 
-        [theta_h,rxy] = cart2pol(v_zxy_unnorm(:,2),v_zxy_unnorm(:,3));
+        [theta,rxy] = cart2pol(v_zxy_unnorm(:,2),v_zxy_unnorm(:,3));
         combined_vzr = [v_zxy_unnorm(:,1),rxy;...
             v_zxy_unnorm(:,1),-rxy].*1e3;
 
@@ -310,8 +311,47 @@ if plot_dist
         ax.TickLength = [k, k]; % Make tick marks longer.
         ax.LineWidth = 100*k; % Make tick marks thicker.
 
-    end
-end
+        nbins_th=40;%50
+        nbins_ph=20;
+        theta_bins = linspace(-pi,pi,nbins_th);
+        phi_bins = linspace(-pi/2,pi/2,nbins_ph);
+
+        phi = atan(v_zxy_unnorm(:,1)./sqrt(v_zxy_unnorm(:,2).^2+v_zxy_unnorm(:,3).^2));
+
+        stfig(['spherical density plot ',num2str(ii)]);
+        clf
+        clear sph_density avg_rad theta_mean phi_mean
+        for jj = 1:(nbins_th-1)
+            for kk = 1:(nbins_ph-1)
+                ang_mask = theta_bins(jj)<theta & theta<=theta_bins(jj+1) ...
+                    & phi_bins(kk)<phi & phi<=phi_bins(kk+1);
+                area = abs(theta_bins(jj+1)-theta_bins(jj))*abs(sin(phi_bins(kk+1))-sin(phi_bins(kk)));
+                sph_density(jj,kk) = sum(ang_mask)./area;
+                avg_rad(jj,kk)  = nanmean(r_dist_unnorm(ang_mask));
+                phi_mean(kk) = mean(phi_bins(kk:(kk+1)));
+            end
+            theta_mean(jj) = mean(theta_bins(jj:(jj+1)));
+                
+        end
+        subplot(2,1,1)
+        pcolor(theta_mean,phi_mean,avg_rad.')
+        shading flat
+        colorbar
+        xlabel('\(\theta\)')
+        ylabel('\(\phi\)')
+        title('average radius')
+        subplot(2,1,2)
+        title('average density')
+        pcolor(theta_mean,phi_mean,sph_density.')
+        shading flat
+        colorbar
+        xlabel('\(\theta\)')
+        ylabel('\(\phi\)')
+        title('density')
+
+
+    
+
 %% Measure Correlations
 
 % general settings
@@ -324,7 +364,7 @@ corr_opts.fit = false;
 corr_opts.calc_err = false;
 
 %normalisation portion
-global_sample_portion = 0.001;%4e-5;%1.0;%0.05;%0.08;%0.5;%1.0;%
+global_sample_portion = 0.0006;%4e-5;%1.0;%0.05;%0.08;%0.5;%1.0;%
 corr_opts.norm_samp_factor=1500;%1500;
 
 % variables for calculating the error
@@ -336,7 +376,7 @@ corr_opts.num_samp_rep=5;
 corr_opts.attenuate_counts=1;
 
 %volume widths
-global_opts.delta_kd = [1e-3,3e-3,3e-3];%
+global_opts.delta_kd = [4e-3,4e-3,4e-3];%
 dkx = global_opts.delta_kd(2);
 dky = global_opts.delta_kd(3);
 dkz = global_opts.delta_kd(1);
@@ -344,7 +384,7 @@ dkr = 5e-3;%(dkx.*dky.*dkz).^(1/3);
 
 % BACK TO BACK (in the same halo)
 %chose method of correlation calculation
-corr_opts.type= '1d_cart_bb';%'2d_cart_bb';%'1d_cart_bb';%'radial_bb';%'1d_vol_bb';%
+corr_opts.type= '1d_cart_bb';%'2d_cart_bb';%''1d_cart_bb';%'radial_bb';%'1d_vol_bb';%
 corr_opts.bin_lims = 6;
 corr_opts.one_d_dimension = 2; %[z,x,y]
 corr_opts.two_d_dimensions = [2,3];
@@ -384,20 +424,21 @@ corr_opts.param_num = 4;
 corr_opts.fig=['halo bb corr ',num2str(ii)];
 corrs.top_halo.corr_bb=calc_any_g2_type(corr_opts,halo{ii}.counts_vel');
 % corrs.top_halo.corr_bb=calc_any_g2_type(corr_opts,top_halo.counts_vel_norm');
-
+    end
+end
 %% Measure Squeezing
 % squeezingtemp(halo{1}.counts_vel.',1)
 
 
-% Number of azimuthal zones (always have two elevation zones, so total bins Nz = 2*zones_azm) 
-zones_azm = 4;
-% How much to rotate the halo 
+% Number of azimuthal zones (always have two elevation zones, so total bins Nz = 2*zones_azm)
+zones_azm = 2;
+% How much to rotate the halo
 shift_around = 0.0*pi;
 % Randomly remove this percentage of data (for checking algorithm reasonable)
 random_throw_away_perc = 0.0;
-% Nz = number of bins to check 
-Nz_test = [(2:2:50) 60:10:180]'; 
+% Nz = number of bins to check
+Nz_test = [(2:2:50) 60:10:180]';
 % Check counts between 5-20, 20-40
-count_ranges = [0,5,30,Inf];
+count_ranges = [0,Inf];
 % squeezing_zones_mode(halo{1}.counts_vel', true, Nz_test, count_ranges, random_throw_away_perc);
 
